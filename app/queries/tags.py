@@ -4,22 +4,22 @@ from fastapi import HTTPException,status
 
 async def add_new_tag(name:str):
     if not await DB.execute('insert into tags(name) values ($1)',name):
-        raise HTTPException(status_code=status.HTTP_200_OK)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
 async def add_tag_to_employee(tags_id: int, employee_id: int):
     if not await DB.execute('insert into tags_employee (tags_id,employee_id) values ($1,$2)',tags_id,employee_id):
-        raise HTTPException(status_code=status.HTTP_200_OK)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
 async def remove_tag_from_employee(tags_id: int, employee_id: int):
     if not await DB.execute('delete from tags_employee where tags_id = $1 and employee_id = $2', tags_id,employee_id):
-        raise HTTPException(status_code=status.HTTP_200_OK)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
     
 async def delete_tag(tags_id:int):
     await DB.execute('delete from tags_employee where tags_id = $1',tags_id)
     await DB.execute('delete from tags where id = $1',tags_id)
 
 async def get_tags():
-    return await DB.fetch('select id,name from tags')
+    return await DB.fetch('select * from tags')
 
 async def search_by_tags(tags: list):
     return await DB.fetch('''
