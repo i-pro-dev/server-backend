@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
-from app.routers.test import test_router
 from app.routers.github import github_router
+from app.routers.users import users_router
 from app.db.db import DB
 
 app = FastAPI(title='hackaton-backend')
@@ -18,5 +18,5 @@ async def shutdown():
     print('db disconnected')
     
 
-app.include_router(test_router)
 app.include_router(github_router)
+app.include_router(users_router)
