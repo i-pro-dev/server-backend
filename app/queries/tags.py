@@ -24,13 +24,13 @@ async def get_tags():
 async def search_by_tags(tags: list):
     return await DB.fetch('''
         with ids as 
-        (select employee_id, count(tags_id)
+        (select t.employee_id, count(t.tags_id)
         from tags_employee as t
         where t.tags_id = ANY($1:int[])
-        group by employee_id)
-        select e.id, e.name, e.surname from employee as e
+        group by t.employee_id)
+        select e.id, e.name, e.surname from users as e
         join ids on e.id = ids.employee_id
-        where ids.count = $2                      
+        where ids.count = $2                     
     ''',tags,len(tags))
     
 async def get_tags_of_employee(employee_id: int):
