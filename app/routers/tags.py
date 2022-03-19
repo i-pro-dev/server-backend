@@ -10,7 +10,7 @@ from app.formatter import format_record, format_records
 tags_router = APIRouter()
 
 @tags_router.post('/tag')
-async def add_new_tag(tag_name: int):
+async def add_new_tag(tag_name: str):
     await tags_queries.add_new_tag(tag_name)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
         'details':'Successful',
@@ -40,6 +40,7 @@ async def delete_tag(tags_id: int):
 @tags_router.get('/tags')
 async def get_tags():
     result = await tags_queries.get_tags()
+    
     return JSONResponse(status_code=status.HTTP_200_OK,content={
         'details':format_records(result),
     })
