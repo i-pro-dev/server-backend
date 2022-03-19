@@ -26,7 +26,7 @@ async def search_by_tags(tags: list):
         with ids as 
         (select t.employee_id, count(t.tags_id)
         from tags_employee as t
-        where t.tags_id = ANY($1:int[])
+        where t.tags_id = ANY($1::int[])
         group by t.employee_id)
         select e.id, e.name, e.surname from users as e
         join ids on e.id = ids.employee_id
