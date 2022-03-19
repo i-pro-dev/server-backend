@@ -11,21 +11,21 @@ tags_router = APIRouter()
 
 @tags_router.post('/tag')
 async def add_new_tag(tag_name: int):
-    result = await tags_queries.add_new_tag(tag_name)
+    await tags_queries.add_new_tag(tag_name)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
         'details':'Successful',
     })
     
 @tags_router.post('/user/tag')
 async def add_tag_to_employee(tags_id: int, employee_id: int):
-    result = await tags_queries.add_new_tag(tags_id,employee_id)
+    await tags_queries.add_new_tag(tags_id,employee_id)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
         'details': 'Successful',
     })
 
 @tags_router.delete('/user/tag')
 async def remove_tag_from_employee(tags_id:int, employee_id:int):
-    result = await tags_queries.remove_tag_from_employee(tags_id,employee_id)
+    await tags_queries.remove_tag_from_employee(tags_id,employee_id)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
         'details':'Successful',
     })
@@ -39,9 +39,9 @@ async def delete_tag(tags_id: int):
 
 @tags_router.get('/tags')
 async def get_tags():
-    await tags_queries.get_tags()
+    result = await tags_queries.get_tags()
     return JSONResponse(status_code=status.HTTP_200_OK,content={
-        'details':'Successful',
+        'details':format_records(result),
     })
     
 @tags_router.get('/tags/users')
