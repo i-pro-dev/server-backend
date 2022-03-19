@@ -18,7 +18,7 @@ async def add_new_tag(tag_name: str):
     
 @tags_router.post('/user/tag')
 async def add_tag_to_employee(tags_id: int, employee_id: int):
-    await tags_queries.add_new_tag(tags_id,employee_id)
+    await tags_queries.add_tag_to_employee(tags_id,employee_id)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
         'details': 'Successful',
     })
@@ -40,7 +40,6 @@ async def delete_tag(tags_id: int):
 @tags_router.get('/tags')
 async def get_tags():
     result = await tags_queries.get_tags()
-    
     return JSONResponse(status_code=status.HTTP_200_OK,content={
         'details':format_records(result),
     })
