@@ -16,7 +16,7 @@ async def get_user_by_login(login: str):
     return result
         
 async def get_user_by_id(user_id:int):
-    result =  await DB.fetch('select id,name,surname from users where id=$1',user_id)
+    result =  await DB.fetchrow('select id,name,surname from users where id=$1',user_id)
     if not result:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
     return result
