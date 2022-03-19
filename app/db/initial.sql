@@ -41,8 +41,7 @@ CREATE TABLE messages (
     FOREIGN KEY(from_user_id)
         REFERENCES users(id),
     FOREIGN KEY(to_user_id)
-        REFERENCES users(id),
-    UNIQUE(from_user_id, to_user_id)
+        REFERENCES users(id)
 );
 CREATE TABLE favorites (
     employee_id integer,

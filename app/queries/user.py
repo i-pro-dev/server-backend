@@ -10,7 +10,7 @@ async def make_user_employee(user_id: int, github_url: str, github_api_key: str,
        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
    
 async def get_user_by_login(login: str):
-    result =  await DB.fetchrow('select id from users where login = $1', login)
+    result =  await DB.fetchrow('select id,name,surname from users where login = $1', login)
     if not result:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
     return result
