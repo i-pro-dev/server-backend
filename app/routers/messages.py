@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 import app.queries.messages as messages_queries
 import requests
 from typing import Optional
+from app.formatter import format_records
 
 messages_router = APIRouter()
 
@@ -11,7 +12,7 @@ messages_router = APIRouter()
 async def get_user_by_id(from_user_id:int, to_user_id:int):
     result = await messages_queries.get_messages(from_user_id, to_user_id)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
-        'details':result,
+        'details':format_records(result),
     })
 
 @messages_router.post('/messages')

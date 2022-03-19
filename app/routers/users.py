@@ -12,7 +12,7 @@ users_router = APIRouter()
 async def get_user_by_id(user_id: int):
     result = await user_queries.get_user_by_id(user_id)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
-        'details':result,
+        'details':format_record(result),
     })
     
 @users_router.get('/user')
