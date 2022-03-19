@@ -45,7 +45,7 @@ async def get_tags():
     })
     
 @tags_router.get('/tags/users')
-async def search_by_tags(tags:List[str]):
+async def search_by_tags(tags:List[str] = Query(None)):
     result = await tags_queries.search_by_tags(tags)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
         'details':format_records(result),
