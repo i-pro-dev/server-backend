@@ -35,5 +35,5 @@ async def search_by_tags(tags: list):
     
 async def get_tags_of_employee(employee_id: int):
     return await DB.fetch('''
-        select t.id,t.name from tags_product as tp join tags on tp.tags_id = tt.id where tp.employee_id = $1                      
+        select t.id,t.name from tags_employee as tp join tags as t on tp.tags_id = t.id where tp.employee_id = $1;                      
     ''',employee_id)
