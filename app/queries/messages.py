@@ -1,8 +1,9 @@
 from app.db.db import DB
+from datetime import datetime
 from fastapi import HTTPException,status
 
 async def send_message(from_user_id: int, to_user_id: int, message: str):
-    if not await DB.execute('insert into messages(from_user_id,to_user_id,message) values ($1,$2,$3)',from_user_id,to_user_id,message):
+    if not await DB.execute('insert into messages(from_user_id,to_user_id,message,updated) values ($1,$2,$3,$4)',from_user_id,to_user_id,message,datetime.now()):
        HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
     
 async def get_messages(from_user_id:int, to_user_id:int):

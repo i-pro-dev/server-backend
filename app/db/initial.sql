@@ -37,6 +37,7 @@ CREATE TABLE messages (
     id serial PRIMARY KEY,
     from_user_id integer,
     to_user_id integer,
+    sended TIMESTAMP,
     message text,
     FOREIGN KEY(from_user_id)
         REFERENCES users(id),
