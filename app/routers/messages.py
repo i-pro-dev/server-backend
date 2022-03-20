@@ -13,11 +13,10 @@ messages_router = APIRouter()
 async def get_user_by_id(from_user_id:int, to_user_id:int):
     result = await messages_queries.get_messages(from_user_id, to_user_id)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
-        'details':{ # message,from_user_id,to_user_id,sended
-            'message': result['message'],
-            'from_user_id': result['from_user_id'],
-            'to_user_id': result['to_user_id'],
-            'sended': str(result['sended'])},
+        'details': [{'message': res['message'],
+            'from_user_id': res['from_user_id'],
+            'to_user_id': res['to_user_id'],
+            'sended': str(res['sended'])} for res in result]
     })
 
 @messages_router.post('/messages')
