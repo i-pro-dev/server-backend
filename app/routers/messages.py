@@ -1,4 +1,5 @@
 from http.client import HTTPException
+import re
 from fastapi import APIRouter, status, Query
 from fastapi.responses import JSONResponse
 import app.queries.messages as messages_queries
@@ -12,7 +13,11 @@ messages_router = APIRouter()
 async def get_user_by_id(from_user_id:int, to_user_id:int):
     result = await messages_queries.get_messages(from_user_id, to_user_id)
     return JSONResponse(status_code=status.HTTP_200_OK,content={
-        'details':format_records(result),
+        'details':{ # message,from_user_id,to_user_id,sended
+            'message': result['message'],
+            'from_user_id': result['from_user_id'],
+            'to_user_id': result['to_user_id'],
+            'sended': str(result['sended'])},
     })
 
 @messages_router.post('/messages')
